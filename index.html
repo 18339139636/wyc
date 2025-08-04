@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head> 
+<meta charset="utf-8"> 
+<title>18禁网页</title>
+<style>
+    .video-container {
+        position: relative;
+        max-width: 100%;
+    }
+    .info提示 {
+        color: #666;
+        margin: 10px 0;
+    }
+</style>
+</head>
+<body>
+<div class="video-container">
+    <p class="info提示">提示：请先点击视频区域,再进行观看</p>
+    <video width="1420" height="775" autoplay playsinline id="mainVideo">
+        <source src="video1.mp4" type="video/mp4">
+        <source src="video.ogg" type="video/ogg">
+        您的浏览器不支持 video 标签。
+    </video>
+    
+</div>
+
+<script>
+    // 处理浏览器自动播放政策限制
+    const video = document.getElementById('mainVideo');
+    
+    // 尝试在用户交互后启用声音
+    function enableSound() {
+        if (video.paused) {
+            video.play();
+        }
+        // 尝试取消静音
+        if (video.muted) {
+            video.muted = false;
+        }
+        // 移除事件监听器，只需要执行一次
+        document.removeEventListener('click', enableSound);
+        document.removeEventListener('touchstart', enableSound);
+    }
+    
+    // 监听用户交互事件（点击或触摸）
+    document.addEventListener('click', enableSound);
+    document.addEventListener('touchstart', enableSound);
+    
+    // 检查视频是否有音频轨道
+    video.addEventListener('loadedmetadata', function() {
+        if (video.mozHasAudio || video.webkitHasAudio || video.hasAudio) {
+            console.log('你已满18岁了吗？');
+        } else {
+            console.log('你已满18岁了吗?');
+            alert('你已满18岁了吗？');
+        }
+    });
+</script>
+</body>
+</html>
